@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const Catway = require('./models/catway'); // Ajuste le chemin si nécessaire
-const Reservation = require('./models/reservation'); // Si tu as un modèle pour les réservations
+const Catway = require('./models/catway'); 
+const Reservation = require('./models/reservation'); 
 require('dotenv').config();
 
 const app = express();
@@ -15,17 +15,17 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connecté'))
     .catch(err => console.log('Erreur de connexion MongoDB:', err));
 
-// Routes
+
 app.get('/', (req, res) => {
-    res.render('index'); // Page d'accueil
+    res.render('index'); 
 });
 
-// Route pour afficher le tableau de bord
+
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard'); // Page du tableau de bord
+    res.render('dashboard'); 
 });
 
-// Exemples de routes pour les utilisateurs
+
 app.post('/users', (req, res) => {
     // Logique pour créer un utilisateur
 });
@@ -51,25 +51,25 @@ app.get('/catways', async (req, res) => {
 });
 
 app.get('/reservations', async (req, res) => {
-    const reservations = await Reservation.find(); // Supposons que Reservation soit ton modèle
+    const reservations = await Reservation.find(); 
     res.render('reservations', { reservations });
 });
 
-// Route pour les détails d'un catway
+
 app.get('/catways/:id', async (req, res) => {
     const catway = await Catway.findById(req.params.id);
     res.render('catway', { catway });
 });
 
-// Route pour les détails d'une réservation
+
 app.get('/reservations/:id', async (req, res) => {
     const reservation = await Reservation.findById(req.params.id);
     res.render('reservation', { reservation });
 });
 
-// Corrected route for API documentation
+
 app.get('/api-docs', (req, res) => {
-    res.render('documentation'); // Render the documentation view
+    res.render('documentation'); 
 });
 
 app.listen(process.env.PORT, () => {
