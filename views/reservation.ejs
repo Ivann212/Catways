@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la Réservation</title>
+</head>
+<body>
+    <h1>Détails de la Réservation</h1>
+    <h2><%= reservation.user %></h2>
+    <p><strong>Catway:</strong> <%= reservation.catway %></p>
+    <p><strong>Date de début:</strong> <%= reservation.startDate %></p>
+    <p><strong>Date de fin:</strong> <%= reservation.endDate %></p>
+
+    <a href="/reservations">Retour à la liste des réservations</a>
+    <a href="/dashboard">Retour au tableau de bord</a>
+</body>
+</html>

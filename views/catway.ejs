@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Catway</title>
+</head>
+<body>
+    <h1>Détails du Catway</h1>
+    <h2><%= catway.name %></h2>
+    <p><strong>Description:</strong> <%= catway.description %></p>
+    <p><strong>Emplacement:</strong> <%= catway.location %></p>
+
+    <h3>Réservations</h3>
+    <ul>
+        <% catway.reservations.forEach(reservation => { %>
+            <li>
+                Réservation de <%= reservation.user %> du <%= reservation.startDate %> au <%= reservation.endDate %>
+            </li>
+        <% }) %>
+    </ul>
+
+    <a href="/catways">Retour à la liste des catways</a>
+    <a href="/dashboard">Retour au tableau de bord</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Catways</title>
+</head>
+<body>
+    <h1>Liste des Catways</h1>
+    <% if (catways && catways.length > 0) { %>
+        <ul>
+            <% catways.forEach(catway => { %>
+                <li><strong>Nom :</strong> <%= catway.name %> - <strong>Description :</strong> <%= catway.description %></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>Aucun catway disponible.</p>
+    <% } %>
+</body>
+</html>

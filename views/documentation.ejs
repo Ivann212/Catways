@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation de l'API</title>
+</head>
+<body>
+    <h1>Documentation de l'API</h1>
+    <h2>Endpoints</h2>
+    <ul>
+        <li><strong>GET /api/catways</strong> : Récupérer tous les catways.</li>
+        <li><strong>GET /api/catways/:id</strong> : Récupérer un catway par son ID.</li>
+        <li><strong>POST /api/catways</strong> : Créer un nouveau catway.</li>
+        <li><strong>PUT /api/catways/:id</strong> : Mettre à jour un catway par son ID.</li>
+        <li><strong>DELETE /api/catways/:id</strong> : Supprimer un catway par son ID.</li>
+        <li><strong>POST /api/reservations</strong> : Créer une réservation.</li>
+        <li><strong>GET /api/reservations</strong> : Récupérer toutes les réservations.</li>
+        <li><strong>GET /api/reservations/:id</strong> : Récupérer une réservation par son ID.</li>
+        <li><strong>DELETE /api/reservations/:id</strong> : Supprimer une réservation par son ID.</li>
+    </ul>
+
+    <h2>Exemples de requêtes</h2>
+    <h3>Créer un catway</h3>
+    <pre>
+        curl -X POST http://localhost:3000/api/catways \
+        -H "Content-Type: application/json" \
+        -d '{"name": "Catway A", "description": "Petit appontement", "location": "Port A"}'
+    </pre>
+    
+    <h3>Récupérer un catway</h3>
+    <pre>
+        curl -X GET http://localhost:3000/api/catways/:id
+    </pre>
+
+    <h3>Créer une réservation</h3>
+    <pre>
+        curl -X POST http://localhost:3000/api/reservations \
+        -H "Content-Type: application/json" \
+        -d '{"user": "John Doe", "catway": "Catway A", "startDate": "2023-10-01", "endDate": "2023-10-02"}'
+    </pre>
+
+    <a href="/">Retour à la page d'accueil</a>
+</body>
+</html>
