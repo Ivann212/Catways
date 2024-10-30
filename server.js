@@ -15,6 +15,8 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connecté'))
     .catch(err => console.log('Erreur de connexion MongoDB:', err));
 
+mongoose.set('debug', true);
+
 
 app.get('/', (req, res) => {
     res.render('index'); 
@@ -42,8 +44,8 @@ app.post('/users/delete', (req, res) => {
 app.get('/catways', async (req, res) => {
     try {
         const catways = await Catway.find();
-        console.log("Catways récupérés:", catways); 
-        res.render('catways', { catways });
+        console.log("Catways récupérés:", catways); // Devrait afficher les données dans la console
+        res.json('catways', { catways });
     } catch (error) {
         console.error("Erreur lors de la récupération des catways:", error);
         res.status(500).send("Erreur serveur");
@@ -74,4 +76,31 @@ app.get('/api-docs', (req, res) => {
 
 app.listen(process.env.PORT, () => {
     console.log(`Serveur démarré sur le port ${process.env.PORT}`);
+});
+
+
+app.get('/test-catways', async (req, res) => {
+    try {
+        const catways = await Catway.find({});
+        console.log("Catways récupérés:", catways);
+        if (!catways || catways.length === 0) {
+            console.log("Aucun catway trouvé dans la base de données.");
+        }
+        res.json(catways);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des catways:", error);
+        res.status(500).send("Erreur serveur");
+    }
+});
+
+mongoose.connection.on('error', err => {
+    console.error('Erreur Mongoose:', err);
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose est connecté à la base de données');
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose est déconnecté');
 });

@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const catwaySchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    description: String,
-    location: String,
-    available: { type: Boolean, default: true }
-});
+    catwayNumber: { type: Number, required: true },
+    type: { type: String, required: true },
+    catwayState: { type: String, required: true }
+}, { collection: 'catways' });
 
 module.exports = mongoose.model('Catway', catwaySchema);
