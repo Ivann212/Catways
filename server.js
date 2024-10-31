@@ -45,7 +45,7 @@ app.get('/catways', async (req, res) => {
     try {
         const catways = await Catway.find();
         console.log("Catways récupérés:", catways); // Devrait afficher les données dans la console
-        res.json('catways', { catways });
+        res.render('catways', { catways });
     } catch (error) {
         console.error("Erreur lors de la récupération des catways:", error);
         res.status(500).send("Erreur serveur");
