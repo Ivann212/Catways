@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord</title>
+</head>
+<body>
+  
+  <% if (user && user.role === 'admin') { %>
+    <h1>Dashboard Admin</h1>
+    <h2>Ajouter un Catway</h2>
+    <form action="/dashboard/catway" method="POST">
+      <label for="catwayNumber">Numéro du catway :</label>
+      <input type="text" id="catwayNumber" name="catwayNumber" required>
+
+      <label for="type">Type :</label>
+      <input type="text" id="type" name="type" required>
+
+      <label for="catwayState">État :</label>
+      <input type="text" id="catwayState" name="catwayState" required>
+
+      <button type="submit">Créer le Catway</button>
+  </form>
+  <h2>Créer une Réservation</h2>
+  <form action="/dashboard/reservation" method="POST">
+    <label for="catway">Catway :</label>
+    <select name="catway" id="catway" required>
+      <% catways.forEach(catway => { %>
+        <option value="<%= catway._id %>"><%= catway.catwayNumber %> - <%= catway.type %> - <%= catway.catwayState %></option>
+      <% }) %>
+    </select>
+
+    <label for="clientName">Nom du client :</label>
+    <input type="text" id="clientName" name="clientName" required>
+
+    <label for="boatName">Nom du bateau :</label>
+    <input type="text" id="boatName" name="boatName" required>
+
+    <label for="checkIn">Date d'arrivée :</label>
+    <input type="date" id="checkIn" name="checkIn" required>
+
+    <label for="checkOut">Date de départ :</label>
+    <input type="date" id="checkOut" name="checkOut" required>
+
+    <button type="submit">Créer la réservation</button>
+  </form>
+
+
+    <h4>Catways</h4>
+    <ul>
+      <% catways.forEach(catway => { %>
+        <li><%= catway.catwayNumber %> - <%= catway.type %> - <%= catway.catwayState %></li>
+        <form action="/catways/<%= catway._id %>?_method=PUT" method="POST">
+          <label for="catwayNumber">Numéro du catway :</label>
+          <input type="text" id="catwayNumber" name="catwayNumber" value="<%= catway.catwayNumber %>" required>
+      
+          <label for="type">Type :</label>
+          <input type="text" id="type" name="type" value="<%= catway.type %>" required>
+      
+          <label for="catwayState">État :</label>
+          <input type="text" id="catwayState" name="catwayState" value="<%= catway.catwayState %>" required>
+      
+          <button type="submit">Mettre à jour</button>
+        </form>
+        <form action="/catways/<%= catway._id %>" method="POST" style="display:inline;">
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit">Supprimer le Catway</button>
+        </form> 
+      <% }) %>
+    </ul>
+
+    <h5>Reservations</h5>
+    <ul>
+      <% reservations.forEach(reservation => { %>
+        <li>
+          <%= reservation.catway ? reservation.catway.catwayNumber : 'Catway non disponible' %> - 
+          <%= reservation.clientName %> - 
+          <%= reservation.boatName %> - 
+          <%= reservation.checkIn.toLocaleDateString() %> - 
+          <%= reservation.checkOut.toLocaleDateString() %>
+        </li>
+        <form action="/dashboard/reservation/<%= reservation._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit">Supprimer</button>
+        </form>
+        
+      <% }) %>
+    </ul>
+
+    <h5>Tableau de bord</h5>
+
+    
+    <h6>Ajouter un utilisateur</h6>
+    <form action="/dashboard/users" method="POST">
+      <input type="text" name="name" placeholder="Nom" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Mot de passe" required>
+      <select name="role">
+        <option value="user">Utilisateur</option>
+        <option value="admin">Administrateur</option>
+      </select>
+      <button type="submit">Ajouter l'utilisateur</button>
+    </form>
+
+    
+    <h6>Liste des utilisateurs</h6>
+    <ul>
+      <% users.forEach(user => { %>
+        <li>
+          <%= user.name %> - <%= user.email %> - <%= user.role %>
+          <form action="/dashboard/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</button>
+          </form>
+          
+        </li>
+      <% }) %>
+    </ul>
+
+
+
+  <% } else { %>
+    <p>Accès refusé. Vous devez être administrateur pour accéder à ce tableau de bord.</p>
+  <% } %>
+
+</body>
+</html>

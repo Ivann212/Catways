@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation API</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- Ajoute ton CSS si nécessaire -->
+</head>
+<body>
+  <header>
+    <h1>Documentation de l'API</h1>
+    <nav>
+      <ul>
+        <li><a href="#overview">Vue d'ensemble</a></li>
+        <li><a href="#tutorial">Tutoriel</a></li>
+        <li><a href="#examples">Exemples</a></li>
+        <li><a href="#glossary">Glossaire</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="overview">
+    <h2>Vue d'ensemble</h2>
+    <p>
+      L'API permet de gérer un système de réservation de catways. Elle inclut des fonctionnalités pour la gestion des <strong>catways</strong>, des <strong>réservations</strong>, des <strong>utilisateurs</strong> et des <strong>admins</strong>.
+      Elle utilise <strong>MongoDB</strong> comme base de données, avec <strong>Express</strong> pour le serveur et <strong>JWT</strong> pour l'authentification.
+    </p>
+    <h3>Points clés :</h3>
+    <ul>
+      <li><strong>Gestion des Catways</strong> : Ajouter, modifier, supprimer et afficher des catways.</li>
+      <li><strong>Gestion des Réservations</strong> : Créer, modifier, supprimer et afficher des réservations.</li>
+      <li><strong>Gestion des Utilisateurs</strong> : Créer, supprimer des utilisateurs (y compris les admins).</li>
+      <li><strong>Sécurité</strong> : Authentification via JWT et rôles d'utilisateur.</li>
+    </ul>
+  </section>
+
+  <section id="tutorial">
+    <h2>Tutoriel</h2>
+
+    <h3>1. Authentification de l'Admin</h3>
+    <p>
+      Pour accéder aux fonctionnalités d'administration, vous devez d'abord vous connecter. Utilisez un utilisateur ayant le rôle "admin" pour vous connecter.
+    </p>
+    <pre>
+      <code>
+        POST /login
+        {
+          "email": "admin@example.com",
+          "password": "adminpassword"
+        }
+      </code>
+    </pre>
+    
+
+    <h3>2. Gestion des Catways</h3>
+    <h4>GET /catways</h4>
+    <p>Récupère tous les catways.</p>
+
+    <h4>POST /catways</h4>
+    <p>Crée un nouveau catway.</p>
+    <pre>
+      <code>
+        POST /catways
+        {
+          "catwayNumber": "123",
+          "type": "Ferry",
+          "catwayState": "disponible"
+        }
+      </code>
+    </pre>
+
+    <h4>PUT /catways/:id</h4>
+    <p>Modifie un catway existant avec l'ID spécifié.</p>
+
+    <h4>DELETE /catways/:id</h4>
+    <p>Supprime un catway.</p>
+
+    <h3>3. Gestion des Réservations</h3>
+    <h4>GET /reservations</h4>
+    <p>Récupère toutes les réservations.</p>
+
+    <h4>POST /reservations</h4>
+    <p>Crée une nouvelle réservation.</p>
+    <pre>
+      <code>
+        POST /reservations
+        {
+          "catway": "60f72b2f5baf1c001f19f8ab",
+          "clientName": "John Doe",
+          "boatName": "Boaty McBoatface",
+          "checkIn": "2025-01-10T12:00:00Z",
+          "checkOut": "2025-01-12T12:00:00Z"
+        }
+      </code>
+    </pre>
+
+    <h4>DELETE /reservations/:id</h4>
+    <p>Supprime une réservation.</p>
+
+    <h3>4. Gestion des Utilisateurs</h3>
+    <h4>GET /users</h4>
+    <p>Récupère tous les utilisateurs.</p>
+
+    <h4>POST /users</h4>
+    <p>Crée un nouvel utilisateur.</p>
+    <pre>
+      <code>
+        POST /users
+        {
+          "name": "Jane Doe",
+          "email": "jane@example.com",
+          "password": "password123",
+          "role": "user"
+        }
+      </code>
+    </pre>
+
+    <h4>PUT /users/:id</h4>
+    <p>Modifie un utilisateur existant.</p>
+
+    <h4>DELETE /users/:id</h4>
+    <p>Supprime un utilisateur.</p>
+  </section>
+
+  <section id="examples">
+    <h2>Exemples</h2>
+    <h3>Exemple 1 : Créer un catway</h3>
+    <pre>
+      <code>
+        POST /catways
+        {
+          "catwayNumber": "002",
+          "type": "Transport",
+          "catwayState": "disponible"
+        }
+      </code>
+    </pre>
+    <h4>Réponse :</h4>
+    <pre>
+      <code>
+        {
+          "message": "Catway créé avec succès",
+          "catway": {
+            "catwayNumber": "002",
+            "type": "Transport",
+            "catwayState": "disponible"
+          }
+        }
+      </code>
+    </pre>
+
+    <h3>Exemple 2 : Créer une réservation</h3>
+    <pre>
+      <code>
+        POST /reservations
+        {
+          "catway": "60f72b2f5baf1c001f19f8ab",
+          "clientName": "Alice",
+          "boatName": "Sea Explorer",
+          "checkIn": "2025-02-15T10:00:00Z",
+          "checkOut": "2025-02-20T10:00:00Z"
+        }
+      </code>
+    </pre>
+    <h4>Réponse :</h4>
+    <pre>
+      <code>
+        {
+          "message": "Réservation créée avec succès",
+          "reservation": {
+            "catway": "60f72b2f5baf1c001f19f8ab",
+            "clientName": "Alice",
+            "boatName": "Sea Explorer",
+            "checkIn": "2025-02-15T10:00:00Z",
+            "checkOut": "2025-02-20T10:00:00Z"
+          }
+        }
+      </code>
+    </pre>
+  </section>
+
+  <section id="glossary">
+    <h2>Glossaire</h2>
+    <ul>
+      <li><strong>Catway</strong> : Un catway est un espace de stationnement pour les bateaux, où les réservations sont effectuées.</li>
+      <li><strong>Réservation</strong> : Une réservation permet à un client de réserver un catway pour un bateau sur une période donnée.</li>
+      <li><strong>Utilisateur</strong> : Un utilisateur peut être un client ou un administrateur du système. Un administrateur a un accès complet aux fonctionnalités de gestion, tandis qu'un utilisateur n'a accès qu'à ses propres informations.</li>
+      <li><strong>JWT (JSON Web Token)</strong> : Un mécanisme d'authentification sécurisé utilisé pour vérifier l'identité de l'utilisateur dans les requêtes.</li>
+    </ul>
+  </section>
+
+</body>
+</html>
+
