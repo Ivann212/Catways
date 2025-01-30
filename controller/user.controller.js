@@ -20,20 +20,23 @@ module.exports.setUsers = async (req, res) => {
 };
 
 module.exports.editUser = async (req, res) => {
-    const user = await UserModel.findById(req.params.id)
+    try {
+        // Vérifie si l'utilisateur existe avec l'ID
+        const user = await UserModel.findById(req.params.id);
+        if (!user) {
+            return res.status(400).json({ message: "Cet utilisateur n'existe pas" });
+        }
 
-    if (!user) {
-        res.status(400).json({ message: "Cet utilisateur n'existe pas"});
+        // Si l'utilisateur existe, on met à jour les données
+        const updateUser = await UserModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+        return res.status(200).json(updateUser);
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
+        return res.status(500).json({ message: "Erreur serveur" });
     }
-
-    const updateUser = await UserModel.findByIdAndUpdate(
-        user,
-        req.body,
-        {new: true}
-    )
-
-    res.status(200).json(updateUser)
 };
+
 
 
 module.exports.deleteUser = async (req, res) => {
@@ -74,6 +77,7 @@ module.exports.loginAdmin = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ message: "Connexion réussie", token });
 };
+
 
 
 module.exports.createAdmin = async (req, res) => {

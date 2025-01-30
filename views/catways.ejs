@@ -9,10 +9,10 @@
   <h1>Liste des Catways</h1>
 
   <ul>
-    <% catways.forEach(catway => { %> <!-- Itérer sur chaque catway -->
+    <% catways.forEach(catway => { %> 
       <li>
-        <strong>Catway <%= catway.catwayNumber %></strong> <!-- Afficher le numéro du catway -->
-        <a href="/catways/<%= catway._id %>"> <!-- Lien pour voir les détails du catway -->
+        <strong>Catway <%= catway.catwayNumber %></strong> 
+        <a href="/catways/<%= catway._id %>"> 
           <button>Voir</button>
         </a>
       </li>

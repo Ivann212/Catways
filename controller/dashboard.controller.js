@@ -71,23 +71,24 @@ module.exports.createCatway = async (req, res) => {
  * @returns {void} - Redirection vers la page d'accueil après la mise à jour réussie du catway.
  */
 
-module.exports.editCatway = async (req, res) => {
-  const { catwayNumber, type, catwayState } = req.body;
-  try {
-    const catway = await CatwayModel.findByIdAndUpdate(
-      req.params.id,
-      { catwayNumber, type, catwayState },
-      { new: true }
-    );
-    if (!catway) {
-      return res.status(404).json({ message: "Catway non trouvé" });
+  module.exports.editCatway = async (req, res) => {
+    const { catwayNumber, type, catwayState } = req.body;
+    try {
+      const catway = await CatwayModel.findByIdAndUpdate(
+        req.params.id,
+        { catwayNumber, type, catwayState },
+        { new: true }
+      );
+      if (!catway) {
+        return res.status(404).json({ message: "Catway non trouvé" });
+      }
+      res.status(200).json(catway);  
+    } catch (error) {
+      console.error("Erreur lors de la modification du catway", error);
+      res.status(500).json({ message: "Erreur serveur" });
     }
-    res.redirect('/');;
-  } catch (error) {
-    console.error("Erreur lors de la modification du catway", error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-};
+  };
+  
 
 /**
  * Supprime un catway de la base de données.

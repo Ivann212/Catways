@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const authenticate = require("./middleware/auth");
 const cookieParser = require('cookie-parser'); 
 const methodOverride = require('method-override');
-const { isAdmin } = require('./middleware/auth')
+
 
 
 const port = 3000
