@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false}))
 
-app.use("/users", require("./routes/users"));
+
 app.use("/catways", require("./routes/catways"));
 app.use("/dashboard", require("./routes/dashboard"));
 
