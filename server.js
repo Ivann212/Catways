@@ -70,4 +70,6 @@ app.post('/login', async (req, res) => {
   
 
 
-app.listen(port, () => console.log("le serveur à démarrer sur le port " + port))
+// app.listen(port, () => console.log("le serveur à démarrer sur le port " + port))
+
+module.exports = app;
